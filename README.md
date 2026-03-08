@@ -15,7 +15,7 @@
 > - Работа с игроками (отправка сообщения, работа с инв, получения ника и UUID игрока и тд...)
 > - Удобная работа с Scheduler
 
-> **FellLibAPI** — это просто сборник повторяющегося кода, который мне надоело писать по сто раз
+> **CloudLibsAPI** — это просто сборник повторяющегося кода, который мне надоело писать по сто раз
 
 # Подключение
 ### Maven
@@ -29,7 +29,7 @@
 ```xml
 <dependency>
     <groupId>com.github.NBTPackets</groupId>
-    <artifactId>FellLibAPI</artifactId>
+    <artifactId>CloudLibsAPI</artifactId>
     <version>1.0.0-RELEASE</version> <!-- укажите актуальную версию -->
     <scope>provided</scope>
 </dependency>
@@ -48,13 +48,13 @@ dependencyResolutionManagement {
 
 ```groovy
 dependencies {
-    implementation 'github.com.nbtpackets:FellLibAPI:1.0.0-RELEASE' // укажите актуальную версию
+    implementation 'github.com.nbtpackets:CloudLibsAPI:1.0.0-RELEASE' // укажите актуальную версию
 }
 ```
 
 ### plugin.yml
 ```yaml
-depend: [FellLibAPI]
+depend: [CloudLibsAPI]
 ```
 
 # Как использовать?

@@ -1,6 +1,6 @@
-name: FellLibAPI
+name: CloudLibsAPI
 version: '${project.version}'
-main: github.com.nbtpackets.FellLibAPI
+main: github.com.nbtpackets.CloudLibsAPI
 api-version: '1.16'
 load: STARTUP
 authors: [ NBTPackets]
