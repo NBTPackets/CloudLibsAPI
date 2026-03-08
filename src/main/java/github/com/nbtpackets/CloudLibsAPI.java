@@ -4,9 +4,9 @@ import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 import github.com.nbtpackets.util.LogUtil;
 
-public final class CloudLibAPI extends JavaPlugin {
+public final class CloudLibsAPI extends JavaPlugin {
     
-    @Getter private static CloudLibAPI instance;
+    @Getter private static CloudLibsAPI instance;
     private LogUtil log;
 
     @Override
