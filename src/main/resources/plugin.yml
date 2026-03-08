@@ -1,0 +1,7 @@
+name: FellLibAPI
+version: '${project.version}'
+main: github.com.nbtpackets.FellLibAPI
+api-version: '1.16'
+load: STARTUP
+authors: [ NBTPackets]
+website: https://github.com/NBTPackets
