@@ -31,7 +31,7 @@
 <dependency>
     <groupId>com.github.NBTPackets</groupId>
     <artifactId>CloudLibsAPI</artifactId>
-    <version>1.0.0-RELEASE</version> <!-- укажите актуальную версию -->
+    <version>1.0.0</version> <!-- укажите актуальную версию -->
     <scope>provided</scope>
 </dependency>
 ```
@@ -49,7 +49,7 @@ dependencyResolutionManagement {
 
 ```groovy
 dependencies {
-    implementation 'github.com.nbtpackets:CloudLibsAPI:1.0.0-RELEASE' // укажите актуальную версию
+    implementation 'github.com.nbtpackets:CloudLibsAPI:1.0.0' // укажите актуальную версию
 }
 ```
 
