@@ -1,5 +1,5 @@
 <p align="center">
-  # CloudLibsAPI
+  CloudLibsAPI
   <br><br>
   <img src="https://img.shields.io/badge/Minecraft-1.20–1.21+-orange" alt="Supported versions"/>
   <img src="https://img.shields.io/badge/Platform-Paper%20%7C%20Spigot-blue" alt="Platform"/>
@@ -15,7 +15,6 @@
 > - Удобная система логов через SLF4J
 > - Работа с игроками (отправка сообщения, работа с инв, получения ника и UUID игрока и тд...)
 > - Удобная работа с Scheduler
-> - Готовая система меню
 
 > **CloudLibsAPI** — это просто сборник повторяющегося кода, который мне надоело писать по сто раз
 
@@ -32,7 +31,7 @@
 <dependency>
     <groupId>com.github.NBTPackets</groupId>
     <artifactId>CloudLibsAPI</artifactId>
-    <version>VERSION</version> <!-- укажите актуальную версию -->
+    <version>1.0.0</version> <!-- укажите актуальную версию -->
     <scope>provided</scope>
 </dependency>
 ```
@@ -50,7 +49,7 @@ dependencyResolutionManagement {
 
 ```groovy
 dependencies {
-    implementation 'github.com.nbtpackets:CloudLibsAPI:VERSION' // укажите актуальную версию
+    implementation 'github.com.nbtpackets:CloudLibsAPI:1.0.0' // укажите актуальную версию
 }
 ```
 
@@ -246,72 +245,4 @@ Task.timerAsyncSelf(0L, 20L, task -> {
     }
 });
 ```
-#### Система меню
 
-Больше никаких _**чем гуще лес if else if else**_
-
-Предметом без обновления данных
-```java
-public class Menu extends BaseMenu {
-
-    public MyMenu(Player player) {
-        super(27, Component.text("Меню"));
-
-        // кнопка с действием
-        setItem(10, 
-            ItemBuilder.create(Material.DIAMOND)
-                .name("<gold>Алмаз")
-                .lore("<gray>Нажми чтобы получить")
-                .build(),
-            event -> {
-                PlayerMsg.send(event.player(), "<green>Ты получил алмаз!");
-                player.getInventory().addItem(new ItemStack(Material.DIAMOND));
-                event.playSound(Sound.ENTITY_PLAYER_LEVELUP);
-            }
-        );
-```
-Предмет с обновлением данных
-```java
-public class UpdateMenu extends BaseMenu {
-
-    public BalanceMenu(Player player) {
-        super(27, Component.text("Баланс"));
-
-        // предмет который сам обновляется
-        setDynamicItem(13, () -> 
-            ItemBuilder.create(Material.GOLD_INGOT)
-                .name("<yellow>Ваш составляет: <gold>" + getBalance(player))
-                .build(),
-            event -> {
-                addMoney(player, 100);
-                refresh(); // обновляем меню
-            }
-        );
-
-        // автообновление каждую секунду
-        startAutoUpdate(20L);
-    }
-```
-Открытие меню
-```java
-MenuFactory.open(player, () -> new MyMenu(player));
-```
-Как делает _ГЕНИЙ_:
-```java
-if (title.equals("Меню")) {
-if (slot == 10) {
-if (item.getType() == Material.DIAMOND) {
-// логика
-}
-} else if (slot == 11) {
-// еще логика
-} // и так 50 раз... как долбаеб
-}
-```
-Как можно делать:
-```java
-setItem(10, item, event -> {
-// логика прямо здесь
-});
-```
-Теперь вы можете делать все рядом, а не через хуйню
