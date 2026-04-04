@@ -1,5 +1,5 @@
 <p align="center">
-  CloudLibsAPI
+  # CloudLibsAPI
   <br><br>
   <img src="https://img.shields.io/badge/Minecraft-1.20–1.21+-orange" alt="Supported versions"/>
   <img src="https://img.shields.io/badge/Platform-Paper%20%7C%20Spigot-blue" alt="Platform"/>
@@ -15,6 +15,7 @@
 > - Удобная система логов через SLF4J
 > - Работа с игроками (отправка сообщения, работа с инв, получения ника и UUID игрока и тд...)
 > - Удобная работа с Scheduler
+> - Готовая система меню
 
 > **CloudLibsAPI** — это просто сборник повторяющегося кода, который мне надоело писать по сто раз
 
@@ -31,7 +32,7 @@
 <dependency>
     <groupId>com.github.NBTPackets</groupId>
     <artifactId>CloudLibsAPI</artifactId>
-    <version>1.0.0</version> <!-- укажите актуальную версию -->
+    <version>VERSION</version> <!-- укажите актуальную версию -->
     <scope>provided</scope>
 </dependency>
 ```
@@ -49,7 +50,7 @@ dependencyResolutionManagement {
 
 ```groovy
 dependencies {
-    implementation 'github.com.nbtpackets:CloudLibsAPI:1.0.0' // укажите актуальную версию
+    implementation 'github.com.nbtpackets:CloudLibsAPI:VERSION' // укажите актуальную версию
 }
 ```
 
@@ -65,7 +66,7 @@ depend: [CloudLibsAPI]
 // отправляет сообщение с цветом игроку
 player.sendMessage(TextColor.parse("<red>текст"));
 ```
-или же сообщение от либы где сразу есть поддержка цветов 
+или же сообщение от либы где сразу есть поддержка цветов
 ```java
 PlayerMsg.send(player, "<green>текст");
 ```
@@ -245,4 +246,74 @@ Task.timerAsyncSelf(0L, 20L, task -> {
     }
 });
 ```
+#### Система меню
 
+Больше никаких _**чем гуще лес if else if else**_
+
+Открытие меню
+```java
+MenuFactory.open(player, () -> new Menu(player));
+```
+Предмет без обновления данных
+```java
+public class Menu extends BaseMenu {
+
+    public Menu(Player player) {
+        super(27, Component.text("Меню"));
+
+        // кнопка с действием
+        setItem(10, 
+            ItemBuilder.create(Material.DIAMOND)
+                .name("<gold>Алмаз")
+                .lore("<gray>Нажми чтобы получить")
+                .build(),
+            event -> {
+                PlayerMsg.send(event.player(), "<green>Ты получил алмаз!");
+                player.getInventory().addItem(new ItemStack(Material.DIAMOND));
+                event.playSound(Sound.ENTITY_PLAYER_LEVELUP);
+            }
+        );
+```
+Предмет с обновлением данных
+```java
+public class UpdateMenu extends BaseMenu {
+
+    public UpdateMenu(Player player) {
+        super(27, Component.text("Баланс"));
+
+        // предмет который сам обновляется
+        setDynamicItem(13, () -> 
+            ItemBuilder.create(Material.GOLD_INGOT)
+                .name("<yellow>Ваш составляет: <gold>" + getBalance(player))
+                .build(),
+            event -> {
+                addMoney(player, 100);
+                refresh(); // обновляем меню
+            }
+        );
+
+        // автообновление каждую секунду
+        startAutoUpdate(20L);
+    }
+```
+ Как сделал бы **_ГЕНИЙ_**
+```java
+@EventHandler
+public void onClick(InventoryClickEvent event) {
+if (event.getView().getTitle().equals("Магазин")) {
+if (event.getSlot() == 10) {
+if (event.getCurrentItem().getType() == Material.DIAMOND) {
+// логика покупки
+}
+} else if (event.getSlot() == 11) {
+// еще логика
+} // и так 50 раз...
+}
+}
+```
+Как сделал бы **_ЛЕГЕНДА_**
+```java
+setItem(10, diamondItem, event -> {
+    // логика покупки прямо здесь
+});
+```
